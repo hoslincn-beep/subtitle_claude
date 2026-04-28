@@ -1,8 +1,8 @@
 # SubExtract - Next.js 应用 Dockerfile
 FROM node:20-alpine AS base
 
-# 安装 Python 和 yt-dlp 依赖
-RUN apk add --no-cache python3 py3-pip && \
+# 安装 Python、OpenSSL 和 yt-dlp 依赖
+RUN apk add --no-cache python3 py3-pip openssl && \
     python3 -m pip install --break-system-packages yt-dlp
 
 FROM base AS deps
@@ -37,6 +37,7 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # 确保 yt-dlp 可用
 RUN python3 -m pip install --break-system-packages yt-dlp
