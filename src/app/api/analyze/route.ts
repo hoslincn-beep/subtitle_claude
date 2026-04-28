@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { analyzeVideo } from "@/lib/subtitle/extractor";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
-import { generateCsrfToken, validateCsrfToken } from "@/lib/security/csrf";
+import { generateCsrfToken } from "@/lib/security/csrf";
 
 const analyzeSchema = z.object({
   url: z.string().min(1, "URL is required").max(2048),

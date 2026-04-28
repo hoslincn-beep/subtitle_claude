@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Globe, Sun, Moon } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { defaultLocale, locales, localeLabels, type Locale } from "@/lib/i18n/config";
 

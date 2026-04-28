@@ -1,24 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getCacheStats, cleanExpiredCache } from "@/lib/subtitle/cache";
-import jwt from "jsonwebtoken";
-
-function checkAuth(request: NextRequest): string | null {
-  try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader?.startsWith("Bearer ")) return null;
-    const token = authHeader.slice(7);
-    const payload = jwt.verify(token, process.env.JWT_SECRET || "fallback-secret") as {
-      userId: string;
-    };
-    return payload.userId;
-  } catch {
-    return null;
-  }
-}
+import { getUserIdFromHeader } from "@/lib/security/auth";
 
 export async function GET(request: NextRequest) {
-  if (!checkAuth(request)) {
+  if (!getUserIdFromHeader(request.headers.get("authorization"))) {
     return NextResponse.json({ success: false, error: "未授权" }, { status: 401 });
   }
 
@@ -54,7 +40,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  if (!checkAuth(request)) {
+  if (!getUserIdFromHeader(request.headers.get("authorization"))) {
     return NextResponse.json({ success: false, error: "未授权" }, { status: 401 });
   }
 

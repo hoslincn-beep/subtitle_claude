@@ -10,7 +10,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma
-RUN npm ci --only=production
+RUN npm ci --only=production --ignore-scripts
 
 FROM base AS builder
 WORKDIR /app
@@ -36,6 +36,7 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # 确保 yt-dlp 可用
 RUN python3 -m pip install --break-system-packages yt-dlp

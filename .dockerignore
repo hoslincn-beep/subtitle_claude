@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+
+# Next.js build output
+.next
+out
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment
+.env
+.env*.local
+
+# Data
+data
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test / docs
+CONTEXT_SNAPSHOT.md
+DEPLOYMENT_GUIDE.md
+DEVELOPMENT_PLAN.md
+
+# CI
+.github

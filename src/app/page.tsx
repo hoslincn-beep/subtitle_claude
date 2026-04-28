@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { UrlInput } from "@/components/home/UrlInput";
@@ -27,8 +27,12 @@ const SUPPORTED_PLATFORMS = [
 ];
 
 export default function HomePage() {
-  const { isLoading, data, error, analyze, reset } = useAnalyze();
-  const { downloadingLang, download, downloadBilingual } = useDownload();
+  const { isLoading, data, error, csrfToken, analyze, reset } = useAnalyze();
+  const { downloadingLang, download, downloadBilingual, setCsrfToken } = useDownload();
+
+  useEffect(() => {
+    setCsrfToken(csrfToken);
+  }, [csrfToken, setCsrfToken]);
 
   const [currentUrl, setCurrentUrl] = useState("");
 

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getVideoInfo } from "@/lib/video/info";
-
-export const dynamic = "force-dynamic";
 import { validateAndParseUrl } from "@/lib/video/validator";
 import { z } from "zod";
+
+export const dynamic = "force-dynamic";
 
 const videoInfoSchema = z.object({
   url: z.string().min(1),

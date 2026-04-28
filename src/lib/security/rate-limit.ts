@@ -36,9 +36,12 @@ export function checkRateLimit(
   return { allowed: true, remaining: maxRequests - entry.count, resetAt: entry.resetAt };
 }
 
-export function getRateLimitHeaders(result: ReturnType<typeof checkRateLimit>) {
+export function getRateLimitHeaders(
+  result: ReturnType<typeof checkRateLimit>,
+  maxRequests: number
+) {
   return {
-    "X-RateLimit-Limit": "60",
+    "X-RateLimit-Limit": String(maxRequests),
     "X-RateLimit-Remaining": String(result.remaining),
     "X-RateLimit-Reset": String(Math.ceil(result.resetAt / 1000)),
     "Retry-After": result.allowed ? "0" : String(Math.ceil((result.resetAt - Date.now()) / 1000)),

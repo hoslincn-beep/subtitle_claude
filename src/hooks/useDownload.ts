@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import type { SubtitleTrack, SubtitleFormat } from "@/types/subtitle";
 
 export function useDownload() {
   const [downloadingLang, setDownloadingLang] = useState<string | null>(null);
+  const csrfRef = useRef<string | null>(null);
+
+  const setCsrfToken = useCallback((token: string | null) => {
+    csrfRef.current = token;
+  }, []);
 
   const download = useCallback(
     async (
@@ -26,7 +31,12 @@ export function useDownload() {
           format,
         });
 
-        const res = await fetch(`/api/download?${params}`);
+        const headers: Record<string, string> = {};
+        if (csrfRef.current) {
+          headers["X-CSRF-Token"] = csrfRef.current;
+        }
+
+        const res = await fetch(`/api/download?${params}`, { headers });
         if (!res.ok) {
           throw new Error("下载失败");
         }
@@ -64,9 +74,16 @@ export function useDownload() {
       setDownloadingLang(`${first.langCode}+${second.langCode}`);
 
       try {
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+        };
+        if (csrfRef.current) {
+          headers["X-CSRF-Token"] = csrfRef.current;
+        }
+
         const res = await fetch("/api/bilingual", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify({
             videoUrl,
             platform,
@@ -103,5 +120,5 @@ export function useDownload() {
     []
   );
 
-  return { downloadingLang, download, downloadBilingual };
+  return { downloadingLang, download, downloadBilingual, setCsrfToken };
 }

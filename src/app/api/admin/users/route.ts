@@ -1,21 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-function checkAuth(request: NextRequest): string | null {
-  try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader?.startsWith("Bearer ")) return null;
-    const token = authHeader.slice(7);
-    const payload = jwt.verify(token, process.env.JWT_SECRET || "fallback-secret") as {
-      userId: string;
-    };
-    return payload.userId;
-  } catch {
-    return null;
-  }
-}
+import { signToken, getUserIdFromHeader } from "@/lib/security/auth";
 
 // Login
 export async function POST(request: NextRequest) {
@@ -45,11 +31,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const token = jwt.sign(
-      { userId: admin.id, role: admin.role },
-      process.env.JWT_SECRET || "fallback-secret",
-      { expiresIn: "24h" }
-    );
+    const token = signToken({ userId: admin.id, role: admin.role }, "24h");
 
     return NextResponse.json({
       success: true,
@@ -65,7 +47,7 @@ export async function POST(request: NextRequest) {
 
 // Change password
 export async function PUT(request: NextRequest) {
-  const userId = checkAuth(request);
+  const userId = getUserIdFromHeader(request.headers.get("authorization"));
   if (!userId) {
     return NextResponse.json({ success: false, error: "未授权" }, { status: 401 });
   }

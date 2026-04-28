@@ -24,13 +24,6 @@ export function generatePageMetadata({
     metadataBase: new URL(BASE_URL),
     alternates: {
       canonical: url,
-      languages: {
-        "zh-CN": `${BASE_URL}/zh-CN${path}`,
-        en: `${BASE_URL}/en${path}`,
-        ja: `${BASE_URL}/ja${path}`,
-        ko: `${BASE_URL}/ko${path}`,
-        es: `${BASE_URL}/es${path}`,
-      },
     },
     openGraph: {
       title,

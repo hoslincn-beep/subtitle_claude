@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { analyzeVideo, downloadSubtitle } from "@/lib/subtitle/extractor";
+import { downloadSubtitle } from "@/lib/subtitle/extractor";
 import { mergeBilingual } from "@/lib/subtitle/bilingual";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { SubtitleFormat } from "@/types/subtitle";
+import { validateCsrfToken } from "@/lib/security/csrf";
 
 const bilingualSchema = z.object({
   videoUrl: z.string().min(1),
@@ -23,6 +24,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: "参数错误" },
         { status: 400 }
+      );
+    }
+
+    if (!validateCsrfToken(request.headers.get("X-CSRF-Token"))) {
+      return NextResponse.json(
+        { success: false, error: "请求已过期，请刷新页面后重试" },
+        { status: 403 }
       );
     }
 

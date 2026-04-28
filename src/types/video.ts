@@ -13,6 +13,8 @@ export interface AnalyzeRequest {
   url: string;
 }
 
+import type { SubtitleTrack } from "./subtitle";
+
 export interface AnalyzeResponse {
   success: boolean;
   videoInfo?: VideoInfo;
@@ -22,5 +24,3 @@ export interface AnalyzeResponse {
   message?: string;
   error?: string;
 }
-
-import type { SubtitleTrack } from "./subtitle";

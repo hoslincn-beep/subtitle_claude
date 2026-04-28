@@ -1,12 +1,18 @@
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { promisify } from "util";
 import path from "path";
 import fs from "fs/promises";
 import type { SubtitleTrack, SubtitleFormat } from "@/types/subtitle";
-import { detectFormat, convertSubtitle } from "./converter";
+import { convertSubtitle } from "./converter";
 
-const execAsync = promisify(exec);
-const YTDLP_PATH = "yt-dlp"; // Assumes yt-dlp is in PATH
+const execFileAsync = promisify(execFile);
+const YTDLP_PATH = "yt-dlp";
+
+const SAFE_LANG_PATTERN = /^[a-zA-Z0-9_-]+$/;
+
+function isSafeArg(value: string): boolean {
+  return SAFE_LANG_PATTERN.test(value);
+}
 
 interface YtDlpSubtitle {
   lang: string;
@@ -41,18 +47,17 @@ export async function listSubtitles(url: string): Promise<{
   } | null;
 }> {
   try {
-    const cmd = `"${YTDLP_PATH}" --dump-json --no-playlist --socket-timeout 30 "${url}"`;
-    const { stdout } = await execAsync(cmd, {
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 30000,
-    });
+    const { stdout } = await execFileAsync(
+      YTDLP_PATH,
+      ["--dump-json", "--no-playlist", "--socket-timeout", "30", url],
+      { maxBuffer: 10 * 1024 * 1024, timeout: 30000 }
+    );
 
     const info: YtDlpVideoInfo = JSON.parse(stdout);
 
     const ccSubtitles: SubtitleTrack[] = [];
     const autoTranslated: SubtitleTrack[] = [];
 
-    // Process CC subtitles
     if (info.subtitles) {
       for (const [langCode, subs] of Object.entries(info.subtitles)) {
         if (subs.length > 0) {
@@ -67,11 +72,9 @@ export async function listSubtitles(url: string): Promise<{
       }
     }
 
-    // Process automatic captions
     if (info.automatic_captions) {
       for (const [langCode, subs] of Object.entries(info.automatic_captions)) {
         if (subs.length > 0) {
-          // Skip if already in CC subtitles
           if (ccSubtitles.find((s) => s.langCode === langCode)) continue;
 
           autoTranslated.push({
@@ -107,20 +110,33 @@ export async function downloadSubtitle(
   langCode: string,
   targetFormat: SubtitleFormat
 ): Promise<string | null> {
+  if (!isSafeArg(langCode)) return null;
+
   const tmpDir = path.join(process.cwd(), "data", "tmp");
   await fs.mkdir(tmpDir, { recursive: true });
 
   try {
-    // yt-dlp downloads as VTT by default
-    const cmd = `"${YTDLP_PATH}" --write-subs --sub-lang "${langCode}" --sub-format vtt --skip-download -o "${tmpDir}/%(id)s.%(ext)s" --no-playlist --socket-timeout 30 "${url}"`;
-    await execAsync(cmd, { maxBuffer: 10 * 1024 * 1024, timeout: 30000 });
+    await execFileAsync(
+      YTDLP_PATH,
+      [
+        "--write-subs",
+        "--sub-lang", langCode,
+        "--sub-format", "vtt",
+        "--skip-download",
+        "-o", path.join(tmpDir, "%(id)s.%(ext)s"),
+        "--no-playlist",
+        "--socket-timeout", "30",
+        url,
+      ],
+      { maxBuffer: 10 * 1024 * 1024, timeout: 30000 }
+    );
 
-    // Find the downloaded file
-    const infoCmd = `"${YTDLP_PATH}" --dump-json --no-playlist --socket-timeout 30 "${url}"`;
-    const { stdout: infoStdout } = await execAsync(infoCmd, {
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 30000,
-    });
+    // Get video ID for file lookup
+    const { stdout: infoStdout } = await execFileAsync(
+      YTDLP_PATH,
+      ["--dump-json", "--no-playlist", "--socket-timeout", "30", url],
+      { maxBuffer: 10 * 1024 * 1024, timeout: 30000 }
+    );
     const info = JSON.parse(infoStdout);
     const videoId = info.id;
 
@@ -132,7 +148,6 @@ export async function downloadSubtitle(
     );
 
     if (!subtitleFile) {
-      // Try without lang suffix
       const vttFiles = files.filter((f) => f.startsWith(videoId) && f.endsWith(".vtt"));
       if (vttFiles.length > 0) {
         const filePath = path.join(tmpDir, vttFiles[0]);
@@ -148,7 +163,6 @@ export async function downloadSubtitle(
     const filePath = path.join(tmpDir, subtitleFile);
     const content = await fs.readFile(filePath, "utf-8");
 
-    // Convert if needed
     if (targetFormat !== "vtt") {
       return convertSubtitle(content, "vtt", targetFormat);
     }

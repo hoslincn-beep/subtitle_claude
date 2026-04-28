@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { downloadSubtitle } from "@/lib/subtitle/extractor";
-
-export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { SubtitleFormat } from "@/types/subtitle";
-import { SUBTITLE_FORMATS } from "@/types/subtitle";
+
+export const dynamic = "force-dynamic";
 
 const downloadSchema = z.object({
   videoId: z.string().min(1),

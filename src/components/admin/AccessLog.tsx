@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, ExternalLink } from "lucide-react";
+import { Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LogEntry {

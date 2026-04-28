@@ -2,12 +2,12 @@
 
 import { useState, useCallback } from "react";
 import type { AnalyzeResponse } from "@/types/video";
-import type { SubtitleTrack, SubtitleFormat } from "@/types/subtitle";
 
 interface AnalyzeState {
   isLoading: boolean;
   data: AnalyzeResponse | null;
   error: string | null;
+  csrfToken: string | null;
 }
 
 export function useAnalyze() {
@@ -15,10 +15,11 @@ export function useAnalyze() {
     isLoading: false,
     data: null,
     error: null,
+    csrfToken: null,
   });
 
   const analyze = useCallback(async (url: string) => {
-    setState({ isLoading: true, data: null, error: null });
+    setState({ isLoading: true, data: null, error: null, csrfToken: null });
 
     try {
       const res = await fetch("/api/analyze", {
@@ -27,29 +28,37 @@ export function useAnalyze() {
         body: JSON.stringify({ url }),
       });
 
-      const data: AnalyzeResponse = await res.json();
+      const body = await res.json();
+      const data: AnalyzeResponse = body;
 
       if (!res.ok || !data.success) {
         setState({
           isLoading: false,
           data: null,
           error: data.message || data.error || "分析失败",
+          csrfToken: null,
         });
         return;
       }
 
-      setState({ isLoading: false, data, error: null });
+      setState({
+        isLoading: false,
+        data,
+        error: null,
+        csrfToken: body.csrf || null,
+      });
     } catch (err) {
       setState({
         isLoading: false,
         data: null,
         error: "网络连接失败，请稍后重试",
+        csrfToken: null,
       });
     }
   }, []);
 
   const reset = useCallback(() => {
-    setState({ isLoading: false, data: null, error: null });
+    setState({ isLoading: false, data: null, error: null, csrfToken: null });
   }, []);
 
   return { ...state, analyze, reset };

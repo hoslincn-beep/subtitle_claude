@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
     const rateResult = checkRateLimit(`api:${ip}`, 60, 60_000);
 
     if (!rateResult.allowed) {
-      const rateHeaders = getRateLimitHeaders(rateResult);
+      const rateHeaders = getRateLimitHeaders(rateResult, 60);
       return new NextResponse(
         JSON.stringify({ success: false, error: "请求过于频繁，请稍后再试" }),
         {
@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
     }
 
     // Add rate limit headers to response
-    const rateHeaders = getRateLimitHeaders(rateResult);
+    const rateHeaders = getRateLimitHeaders(rateResult, 60);
     for (const [key, value] of Object.entries(rateHeaders)) {
       response.headers.set(key, String(value));
     }

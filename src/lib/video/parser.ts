@@ -8,7 +8,7 @@ export interface PageParseResult {
   subtitles?: { langCode: string; langName: string; url: string }[];
 }
 
-export async function parseVideoPage(url: string): Promise<PageParseResult> {
+export function parseVideoPage(url: string): PageParseResult {
   const validation = validateAndParseUrl(url);
 
   if (!validation.isValid) {
