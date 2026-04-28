@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "SubExtract",
+    "tagline": "Descargador de Subtítulos",
+    "description": "Extrae subtítulos de más de 50 plataformas incluyendo YouTube y Bilibili"
+  },
+  "nav": {
+    "home": "Inicio",
+    "supported_platforms": "Plataformas Soportadas",
+    "admin": "Admin",
+    "language": "Idioma"
+  },
+  "home": {
+    "title": "Descargador de Subtítulos en Línea",
+    "subtitle": "Extrae subtítulos multilingües de YouTube, Bilibili, Viki y más de 50 plataformas",
+    "placeholder": "Pega la URL del video...",
+    "analyze": "Analizar",
+    "analyzing": "Analizando...",
+    "supported_platforms": "Plataformas Soportadas",
+    "how_it_works": "Cómo Funciona",
+    "step1_title": "Pega la URL",
+    "step1_desc": "Copia el enlace del video del que quieres descargar subtítulos",
+    "step2_title": "Analiza el Video",
+    "step2_desc": "Detectamos automáticamente el video y extraemos los subtítulos disponibles",
+    "step3_title": "Elige el Formato",
+    "step3_desc": "Selecciona entre SRT, VTT, TXT, ASS o HTML",
+    "step4_title": "Descargar",
+    "step4_desc": "Descarga tu archivo de subtítulos con un solo clic"
+  },
+  "subtitle": {
+    "cc_subtitles": "Subtítulos CC",
+    "auto_translated": "Subtítulos Traducidos",
+    "no_subtitles": "No se detectaron subtítulos en este video",
+    "no_voice": "No se detectó voz en este video",
+    "download": "Descargar",
+    "bilingual_title": "Subtítulos Bilingües",
+    "first_lang": "Primer Idioma",
+    "second_lang": "Segundo Idioma",
+    "download_bilingual": "Descargar Bilingüe",
+    "format": "Formato",
+    "language": "Idioma",
+    "select_language": "Seleccionar Idioma"
+  },
+  "video": {
+    "title": "Título",
+    "author": "Autor",
+    "duration": "Duración",
+    "upload_date": "Fecha de Subida",
+    "platform": "Plataforma",
+    "no_info": "Sin información del video"
+  },
+  "errors": {
+    "invalid_url": "El video solicitado no existe. Verifica la URL",
+    "not_supported": "Esta plataforma aún no es compatible",
+    "network_error": "Error de red. Inténtalo de nuevo más tarde",
+    "server_error": "Error del servidor. Inténtalo de nuevo más tarde",
+    "rate_limited": "Demasiadas solicitudes. Espera un momento",
+    "download_failed": "Falló la descarga de subtítulos"
+  },
+  "footer": {
+    "copyright": "© 2026 SubExtract. Todos los derechos reservados.",
+    "terms": "Términos de Uso",
+    "privacy": "Política de Privacidad",
+    "contact": "Contacto"
+  }
+}

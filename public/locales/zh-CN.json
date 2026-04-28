@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "SubExtract",
+    "tagline": "字幕下载工具",
+    "description": "从 YouTube、Bilibili 等 50+ 平台提取字幕"
+  },
+  "nav": {
+    "home": "首页",
+    "supported_platforms": "支持平台",
+    "admin": "管理",
+    "language": "语言"
+  },
+  "home": {
+    "title": "在线视频字幕下载",
+    "subtitle": "从 YouTube、Bilibili、Viki 等 50+ 视频平台提取多语言字幕",
+    "placeholder": "粘贴视频链接...",
+    "analyze": "开始分析",
+    "analyzing": "分析中...",
+    "supported_platforms": "支持平台",
+    "how_it_works": "使用说明",
+    "step1_title": "粘贴链接",
+    "step1_desc": "复制您想下载字幕的视频链接",
+    "step2_title": "分析视频",
+    "step2_desc": "我们自动检测视频并提取可用字幕",
+    "step3_title": "选择格式",
+    "step3_desc": "选择 SRT、VTT、TXT、ASS 或 HTML 格式",
+    "step4_title": "下载字幕",
+    "step4_desc": "一键下载您需要的字幕文件"
+  },
+  "subtitle": {
+    "cc_subtitles": "CC 字幕",
+    "auto_translated": "自动翻译字幕",
+    "no_subtitles": "该视频未检测到任何字幕文件，无法下载",
+    "no_voice": "该视频未检测到人声语音，无可供下载的字幕",
+    "download": "下载",
+    "bilingual_title": "双语字幕",
+    "first_lang": "第一语言",
+    "second_lang": "第二语言",
+    "download_bilingual": "下载双语字幕",
+    "format": "格式",
+    "language": "语言",
+    "select_language": "选择语言"
+  },
+  "video": {
+    "title": "标题",
+    "author": "作者",
+    "duration": "时长",
+    "upload_date": "上传日期",
+    "platform": "平台",
+    "no_info": "暂无视频信息"
+  },
+  "errors": {
+    "invalid_url": "您请求的视频不存在，请检查视频链接是否正确",
+    "not_supported": "暂不支持该平台，请尝试其他视频链接",
+    "network_error": "网络连接失败，请稍后重试",
+    "server_error": "服务器处理错误，请稍后再试",
+    "rate_limited": "请求过于频繁，请稍后再试",
+    "download_failed": "字幕下载失败，请尝试其他格式"
+  },
+  "footer": {
+    "copyright": "© 2026 SubExtract. 保留所有权利.",
+    "terms": "使用条款",
+    "privacy": "隐私政策",
+    "contact": "联系我们"
+  }
+}

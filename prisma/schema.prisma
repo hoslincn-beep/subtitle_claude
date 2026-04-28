@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AccessLog {
+  id             String   @id @default(cuid())
+  ip             String
+  country        String?
+  userAgent      String?
+  videoUrl       String?
+  platform       String?
+  action         String
+  subtitleLang   String?
+  subtitleFormat String?
+  cacheHit       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([ip])
+  @@index([platform])
+}
+
+model SubtitleCache {
+  id           String    @id @default(cuid())
+  videoId      String
+  platform     String
+  videoUrl     String
+  language     String
+  subtitleType String
+  format       String
+  content      String    @db.Text
+  fileSize     Int
+  filePath     String?
+  hitCount     Int       @default(0)
+  expiresAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([videoId, platform, language, subtitleType, format])
+  @@index([videoId, platform])
+  @@index([expiresAt])
+}
+
+model VideoInfoCache {
+  id          String    @id @default(cuid())
+  videoId     String
+  platform    String
+  title       String
+  author      String
+  duration    Int?
+  thumbnail   String?
+  uploadDate  String?
+  description String?   @db.Text
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([videoId, platform])
+}
+
+model SystemConfig {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String @db.Text
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model ProxyNode {
+  id        String    @id @default(cuid())
+  host      String
+  port      Int
+  protocol  String    @default("http")
+  username  String?
+  password  String?
+  country   String?
+  isActive  Boolean   @default(true)
+  failCount Int       @default(0)
+  lastCheck DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model CookieStore {
+  id        String   @id @default(cuid())
+  platform  String   @unique
+  cookies   String   @db.Text
+  isActive  Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}

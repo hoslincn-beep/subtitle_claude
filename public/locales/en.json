@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "SubExtract",
+    "tagline": "Subtitle Downloader",
+    "description": "Extract subtitles from 50+ platforms including YouTube and Bilibili"
+  },
+  "nav": {
+    "home": "Home",
+    "supported_platforms": "Supported Platforms",
+    "admin": "Admin",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Online Video Subtitle Downloader",
+    "subtitle": "Extract multilingual subtitles from YouTube, Bilibili, Viki and 50+ video platforms",
+    "placeholder": "Paste video URL...",
+    "analyze": "Analyze",
+    "analyzing": "Analyzing...",
+    "supported_platforms": "Supported Platforms",
+    "how_it_works": "How It Works",
+    "step1_title": "Paste URL",
+    "step1_desc": "Copy the video link you want to download subtitles from",
+    "step2_title": "Analyze Video",
+    "step2_desc": "We automatically detect the video and extract available subtitles",
+    "step3_title": "Choose Format",
+    "step3_desc": "Select from SRT, VTT, TXT, ASS, or HTML formats",
+    "step4_title": "Download",
+    "step4_desc": "Download your subtitle file with one click"
+  },
+  "subtitle": {
+    "cc_subtitles": "CC Subtitles",
+    "auto_translated": "Auto-Translated Subtitles",
+    "no_subtitles": "No subtitles detected for this video",
+    "no_voice": "No voice audio detected in this video",
+    "download": "Download",
+    "bilingual_title": "Bilingual Subtitles",
+    "first_lang": "First Language",
+    "second_lang": "Second Language",
+    "download_bilingual": "Download Bilingual",
+    "format": "Format",
+    "language": "Language",
+    "select_language": "Select Language"
+  },
+  "video": {
+    "title": "Title",
+    "author": "Author",
+    "duration": "Duration",
+    "upload_date": "Upload Date",
+    "platform": "Platform",
+    "no_info": "No video info available"
+  },
+  "errors": {
+    "invalid_url": "The requested video does not exist. Please check the URL",
+    "not_supported": "This platform is not yet supported. Try another video link",
+    "network_error": "Network error. Please try again later",
+    "server_error": "Server error. Please try again later",
+    "rate_limited": "Too many requests. Please wait a moment",
+    "download_failed": "Subtitle download failed. Try another format"
+  },
+  "footer": {
+    "copyright": "© 2026 SubExtract. All rights reserved.",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us"
+  }
+}

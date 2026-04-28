@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "SubExtract",
+    "tagline": "字幕ダウンローダー",
+    "description": "YouTube、Bilibiliなど50以上のプラットフォームから字幕を抽出"
+  },
+  "nav": {
+    "home": "ホーム",
+    "supported_platforms": "対応プラットフォーム",
+    "admin": "管理",
+    "language": "言語"
+  },
+  "home": {
+    "title": "オンライン動画字幕ダウンロード",
+    "subtitle": "YouTube、Bilibili、Vikiなど50以上の動画プラットフォームから多言語字幕を抽出",
+    "placeholder": "動画URLを貼り付け...",
+    "analyze": "分析開始",
+    "analyzing": "分析中...",
+    "supported_platforms": "対応プラットフォーム",
+    "how_it_works": "使い方",
+    "step1_title": "URLを貼り付け",
+    "step1_desc": "字幕をダウンロードしたい動画のリンクをコピー",
+    "step2_title": "動画を分析",
+    "step2_desc": "動画を自動検出し、利用可能な字幕を抽出します",
+    "step3_title": "フォーマット選択",
+    "step3_desc": "SRT、VTT、TXT、ASS、HTMLから選択",
+    "step4_title": "ダウンロード",
+    "step4_desc": "ワンクリックで字幕ファイルをダウンロード"
+  },
+  "subtitle": {
+    "cc_subtitles": "CC字幕",
+    "auto_translated": "自動翻訳字幕",
+    "no_subtitles": "この動画には字幕がありません",
+    "no_voice": "この動画には音声が検出されませんでした",
+    "download": "ダウンロード",
+    "bilingual_title": "二言語字幕",
+    "first_lang": "第一言語",
+    "second_lang": "第二言語",
+    "download_bilingual": "二言語字幕をダウンロード",
+    "format": "形式",
+    "language": "言語",
+    "select_language": "言語を選択"
+  },
+  "video": {
+    "title": "タイトル",
+    "author": "作者",
+    "duration": "長さ",
+    "upload_date": "アップロード日",
+    "platform": "プラットフォーム",
+    "no_info": "動画情報がありません"
+  },
+  "errors": {
+    "invalid_url": "動画が見つかりません。URLを確認してください",
+    "not_supported": "このプラットフォームはまだ対応していません",
+    "network_error": "ネットワークエラー。後でもう一度お試しください",
+    "server_error": "サーバーエラー。後でもう一度お試しください",
+    "rate_limited": "リクエストが多すぎます。しばらく待ってください",
+    "download_failed": "字幕のダウンロードに失敗しました"
+  },
+  "footer": {
+    "copyright": "© 2026 SubExtract. All rights reserved.",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "contact": "お問い合わせ"
+  }
+}
